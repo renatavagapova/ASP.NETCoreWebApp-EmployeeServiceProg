@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeServiceProg", "Empl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeService.Data", "EmployeeService.Data\EmployeeService.Data.csproj", "{A9250BD5-7033-4A5F-BCA8-5711932BED99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountHelper", "AccountHelper\AccountHelper.csproj", "{1879A4A9-0043-4E5B-839D-7FD584208C72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountHelper", "AccountHelper\AccountHelper.csproj", "{1879A4A9-0043-4E5B-839D-7FD584208C72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeClient", "EmployeeClient\EmployeeClient.csproj", "{0C71F578-2598-4D01-BAF8-4F106DAC166E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{1879A4A9-0043-4E5B-839D-7FD584208C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1879A4A9-0043-4E5B-839D-7FD584208C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1879A4A9-0043-4E5B-839D-7FD584208C72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C71F578-2598-4D01-BAF8-4F106DAC166E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C71F578-2598-4D01-BAF8-4F106DAC166E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C71F578-2598-4D01-BAF8-4F106DAC166E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C71F578-2598-4D01-BAF8-4F106DAC166E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

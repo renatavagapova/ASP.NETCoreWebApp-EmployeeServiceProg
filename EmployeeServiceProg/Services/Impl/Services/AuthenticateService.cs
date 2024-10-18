@@ -9,7 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace EmployeeServiceProg.Services.Impl
+namespace EmployeeServiceProg.Services.Impl.Services
 {
     public class AuthenticateService : IAuthenticateService
     {
@@ -27,11 +27,11 @@ namespace EmployeeServiceProg.Services.Impl
         {
             SessionDto sessionDto;
 
-            lock (_sessions) 
-            { 
-                _sessions.TryGetValue(sessionToken, out sessionDto); 
+            lock (_sessions)
+            {
+                _sessions.TryGetValue(sessionToken, out sessionDto);
             }
-            
+
             if (sessionDto == null)
             {
                 using IServiceScope scope = _serviceScopeFactory.CreateScope();
@@ -62,14 +62,15 @@ namespace EmployeeServiceProg.Services.Impl
 
             Account account = FindAccountByLogin(context, authenticationRequest.Login);
 
-            if (account == null) {
+            if (account == null)
+            {
                 return new AuthenticationResponse
                 {
                     Status = AuthenticationStatus.UserNotFound
                 };
             }
 
-            if (!PasswordUtils.VerifyPassword(authenticationRequest.Password, account.PasswordSalt, account.PasswordHash)) 
+            if (!PasswordUtils.VerifyPassword(authenticationRequest.Password, account.PasswordSalt, account.PasswordHash))
             {
                 return new AuthenticationResponse
                 {
@@ -85,7 +86,7 @@ namespace EmployeeServiceProg.Services.Impl
                 TimeLastRequest = DateTime.Now,
                 IsClosed = false,
             };
-            
+
             context.AccountSessions.Add(session);
             context.SaveChanges();
 

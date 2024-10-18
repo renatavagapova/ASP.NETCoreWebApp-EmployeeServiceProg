@@ -1,5 +1,3 @@
-
-using EmployeeServiceProg.Services.Impl;
 using EmployeeServiceProg.Services.Interfaces;
 using Microsoft.AspNetCore.HttpLogging;
 using NLog.Web;
@@ -12,6 +10,9 @@ using Microsoft.OpenApi.Models;
 using EmployeeServiceProg.Models.Requests;
 using FluentValidation;
 using EmployeeServiceProg.Models.Validators;
+using System.Net;
+using EmployeeServiceProg.Services.Impl.Services;
+using EmployeeServiceProg.Services.Impl.Repositories;
 
 namespace EmployeeServiceProg
 {
@@ -20,6 +21,15 @@ namespace EmployeeServiceProg
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.Listen(IPAddress.Any, 5001, listenOptions =>
+                {
+                    listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2;
+                    listenOptions.UseHttps(@"C:\testcert.pfx", "12345");
+                });
+            });
 
             // Add services to the container.
 
@@ -90,6 +100,10 @@ namespace EmployeeServiceProg
             builder.Services.AddScoped<IValidator<AuthenticationRequest>, AuthenticationRequestValidator>();
             #endregion
 
+            #region Configure gRPC
+            builder.Services.AddGrpc();
+            #endregion
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -132,15 +146,26 @@ namespace EmployeeServiceProg
 
             app.UseHttpsRedirection();
 
-            app.UseHttpLogging();
-
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseWhen(
+                ctx => ctx.Request.ContentType != "application/grpc",
+                builder =>
+                {
+                    builder.UseHttpLogging();
+                }
+            );
 
             app.MapControllers();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGrpcService<DictionariesService>();
+                endpoints.MapGrpcService<EmployeesService>();
+                endpoints.MapGrpcService<DepartmentService>();
+            });
 
             app.Run();
         }

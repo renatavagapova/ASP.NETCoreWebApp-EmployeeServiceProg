@@ -2,7 +2,7 @@
 using EmployeeServiceProg.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmployeeServiceProg.Services.Impl
+namespace EmployeeServiceProg.Services.Impl.Repositories
 {
     public class EmployeeRepository : IEmployeeRepository
     {

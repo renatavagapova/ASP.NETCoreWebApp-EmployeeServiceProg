@@ -1,7 +1,7 @@
 ﻿using EmployeeService.Data;
 using EmployeeServiceProg.Services.Interfaces;
 
-namespace EmployeeServiceProg.Services.Impl
+namespace EmployeeServiceProg.Services.Impl.Repositories
 {
     public class DepartmentRepository : IDepartmentRepository
     {
@@ -25,8 +25,8 @@ namespace EmployeeServiceProg.Services.Impl
 
         public bool Delete(Guid id)
         {
-            Department department=GetById(id);
-            if(department != null)
+            Department department = GetById(id);
+            if (department != null)
             {
                 _context.Departments.Remove(department);
                 _context.SaveChanges();
@@ -48,10 +48,10 @@ namespace EmployeeServiceProg.Services.Impl
         public bool Update(Department data)
         {
             Department department = GetById(data.Id);
-            if(department != null)
+            if (department != null)
             {
                 department.Description = data.Description;
-                var res=_context.SaveChanges();
+                var res = _context.SaveChanges();
                 return res > 0 ? true : false;
             }
             return false;

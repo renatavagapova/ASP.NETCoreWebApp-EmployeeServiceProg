@@ -1,7 +1,7 @@
 ﻿using EmployeeService.Data;
 using EmployeeServiceProg.Services.Interfaces;
 
-namespace EmployeeServiceProg.Services.Impl
+namespace EmployeeServiceProg.Services.Impl.Repositories
 {
     public class EmployeeTypeRepository : IEmployeeTypeRepository
     {
@@ -42,7 +42,7 @@ namespace EmployeeServiceProg.Services.Impl
 
         public EmployeeType GetById(int id)
         {
-            return _context.EmployeeTypes.FirstOrDefault(x=>x.Id == id);
+            return _context.EmployeeTypes.FirstOrDefault(x => x.Id == id);
         }
 
         public bool Update(EmployeeType data)

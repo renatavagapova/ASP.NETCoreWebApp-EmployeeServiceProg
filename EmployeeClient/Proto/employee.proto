@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option csharp_namespace = "EmployeeServiceProgProto";
+
+package EmployeeServiceProgProto;
+
+service EmployeesService{
+
+	rpc CreateEmployee(CreateEmployeeRequest) returns(CreateEmployeeResponse);
+	rpc GetAllEmployee(GetAllEmployeeRequest) returns(GetAllEmployeeResponse);
+	rpc DeleteEmloyee(DeleteEmloyeeRequest) returns(DeleteEmloyeeResponse);
+}
+
+message CreateEmployeeRequest{
+	string DepartmentId = 1;
+	int32 EmployeeTypeId = 2;
+	string Name = 3;
+	string Surname = 4;
+	string Patronymic = 5;
+	int32 Salary = 6;
+
+}
+
+message CreateEmployeeResponse{
+	int32 id = 1;
+}
+
+message GetAllEmployeeRequest{
+	
+}
+
+message GetAllEmployeeResponse{
+	repeated Employee employee = 1;
+}
+
+message Employee{
+	int32 id = 1;
+	string DepartmentId = 2;
+	int32 EmployeeTypeId = 3;
+	string Name = 4;
+	string Surname = 5;
+	string Patronymic = 6;
+	int32 Salary = 7;
+}
+
+message DeleteEmloyeeRequest{
+	int32 id = 1;
+}
+
+message DeleteEmloyeeResponse{
+	
+}
