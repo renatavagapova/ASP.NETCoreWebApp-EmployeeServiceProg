@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeService.Data", "Emp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountHelper", "AccountHelper\AccountHelper.csproj", "{1879A4A9-0043-4E5B-839D-7FD584208C72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeClient", "EmployeeClient\EmployeeClient.csproj", "{0C71F578-2598-4D01-BAF8-4F106DAC166E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeClient", "EmployeeClient\EmployeeClient.csproj", "{0C71F578-2598-4D01-BAF8-4F106DAC166E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeServiceTests", "EmployeeServiceTests\EmployeeServiceTests.csproj", "{EBC1F98E-3F6B-48C8-A4CE-E5F2B4C64066}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D22EE64A-A58B-49DE-A2EC-75F5F4F64EFD} = {D22EE64A-A58B-49DE-A2EC-75F5F4F64EFD}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +38,10 @@ Global
 		{0C71F578-2598-4D01-BAF8-4F106DAC166E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C71F578-2598-4D01-BAF8-4F106DAC166E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C71F578-2598-4D01-BAF8-4F106DAC166E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBC1F98E-3F6B-48C8-A4CE-E5F2B4C64066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBC1F98E-3F6B-48C8-A4CE-E5F2B4C64066}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBC1F98E-3F6B-48C8-A4CE-E5F2B4C64066}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBC1F98E-3F6B-48C8-A4CE-E5F2B4C64066}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

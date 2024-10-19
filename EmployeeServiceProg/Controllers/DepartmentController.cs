@@ -30,37 +30,89 @@ namespace EmployeeServiceProg.Controllers
         [HttpGet("department/all")]
         public ActionResult<IList<DepartmentDto>> GetAllDepartmnents()
         {
-            return Ok(_departmentRepository.GetAll().Select(d =>
+            var departments = _departmentRepository.GetAll().Select(d =>
                 new DepartmentDto
                 {
                     Id = d.Id,
                     Description = d.Description,
-                }).ToList());
+                }).ToList();
+
+            if (!departments.Any()) // Если список пуст
+            {
+                return NotFound("No departments found.");
+            }
+
+            return Ok(departments);
         }
 
         [HttpPost("department/create")]
         public ActionResult<int> CreateDepartments([FromQuery] string description)
         {
-            return Ok(_departmentRepository.Create(new Department
+            if (string.IsNullOrEmpty(description))
             {
-                Description = description
-            }));
+                return BadRequest("Description cannot be null or empty.");
+            }
+
+            try
+            {
+                var result = _departmentRepository.Create(new Department
+                {
+                    Description = description
+                });
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
         }
 
         [HttpDelete("department/delete")]
         public ActionResult<bool> DeleteDepartments([FromQuery] Guid id)
         {
-            return Ok(_departmentRepository.Delete(id));
+            var existingDepartment = _departmentRepository.GetById(id);
+            if (existingDepartment == null)
+            {
+                return NotFound($"Department with Id {id} not found.");
+            }
+
+            var result = _departmentRepository.Delete(id);
+            if (!result)
+            {
+                return BadRequest("Failed to delete the department.");
+            }
+
+            return Ok(result);
         }
 
         [HttpPut("department/update")]
         public ActionResult<bool> UpdateDepartments([FromBody] DepartmentDto depDto)
         {
-            return Ok(_departmentRepository.Update(new Department
+            if (depDto == null || string.IsNullOrEmpty(depDto.Description))
+            {
+                return BadRequest("Department data is invalid.");
+            }
+
+            var existingDepartment = _departmentRepository.GetById(depDto.Id);
+            if (existingDepartment == null)
+            {
+                return NotFound($"Department with Id {depDto.Id} not found.");
+            }
+
+            var result = _departmentRepository.Update(new Department
             {
                 Id = depDto.Id,
                 Description = depDto.Description
-            }));
+            });
+
+            if (!result)
+            {
+                return BadRequest("Failed to update the department.");
+            }
+
+            return Ok(result);
         }
 
         [HttpGet("department/{id}")]

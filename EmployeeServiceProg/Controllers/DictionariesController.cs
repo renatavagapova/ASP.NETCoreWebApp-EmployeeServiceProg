@@ -26,37 +26,65 @@ namespace EmployeeServiceProg.Controllers
         [HttpGet("employee-types/all")]
         public ActionResult<IList<EmployeeTypeDto>> GetAllEmployeeTypes()
         {
-            return Ok(_employeeTypeRepository.GetAll().Select(et =>
+            var employeeTypes = _employeeTypeRepository.GetAll().Select(et =>
                 new EmployeeTypeDto
                 {
                     Id = et.Id,
                     Description = et.Description,
-                }).ToList());
+                }).ToList();
+
+            // Проверка на пустой список
+            if (employeeTypes == null || !employeeTypes.Any()) 
+            {
+                return NotFound("No employee types found.");
+            }
+
+            return Ok(employeeTypes);
         }
 
         [HttpPost("eployee-types/create")]
         public ActionResult<int> CreateEmployeeType([FromQuery] string description)
         {
-            return Ok(_employeeTypeRepository.Create(new EmployeeType
+            var createdId = _employeeTypeRepository.Create(new EmployeeType
             {
                 Description = description
-            }));
+            });
+
+            if (createdId == 0) // Если создание не удалось, возвращаем BadRequest
+            {
+                return BadRequest("Failed to create employee type.");
+            }
+
+            return Ok(createdId);
         }
 
         [HttpDelete("employee-types/delete")]
         public ActionResult<bool> DeleteEmloyeeType([FromQuery] int id)
         {
-            return Ok(_employeeTypeRepository.Delete(id));
+            var isDeleted = _employeeTypeRepository.Delete(id);
+
+            if (!isDeleted)
+            {
+                return NotFound($"Failed to delete EmployeeType with Id {id}.");
+            }
+            return Ok(isDeleted);
         }
 
         [HttpPut("employee-types/update")]
         public ActionResult<bool> UpdateEmployeeType([FromBody] EmployeeTypeDto employeeTypeDto)
         {
-            return Ok(_employeeTypeRepository.Update(new EmployeeType
+            var isUpdated = _employeeTypeRepository.Update(new EmployeeType
             {
                 Id = employeeTypeDto.Id,
                 Description = employeeTypeDto.Description
-            }));
+            });
+
+            if (!isUpdated)
+            {
+                return NotFound($"Failed to update EmployeeType with Id {employeeTypeDto.Id}.");
+            }
+
+            return Ok(true);
         }
 
         [HttpGet("employee-types/{id}")]
